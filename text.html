@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>VUE</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<link href="bbb.css" rel="stylesheet">
+
+    <script
+            src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        let n=0;
+
+    </script>
+</head>
+
+<body id="drag">
+<div id="calendar">
+    <!--年 月-->
+    <div class="month">
+        <ul>
+            <!--@click为v-on缩写 旨在触发事件 -->
+            <a class="a1" @click="c_Fbefore(c_year,c_month)" id="x1">上个月</a>
+
+                <h4>{{ c_year }} {{ c_month }}月</h4>
+            <a class="a2" @click=" c_Fnext(c_year, c_month)" id="x2">下个月</a>
+
+        </ul>
+    </div>
+        <ul class="weekdays">
+
+            <li>一</li>
+            <li>二</li>
+            <li>三</li>
+            <li>四</li>
+            <li>五</li>
+            <li>六</li>
+            <li>日</li>
+
+        </ul>
+        <!--介是日期-->
+        <ul class="days">
+            <!--v-for循环 每一次循环用<li>标签创建一天 -->
+            <li  v-for="dayobject in days">
+
+
+                <span v-if="dayobject.day.getMonth()+1 != currentMonth" class="other-month">{{ dayobject.day.getDate() }}</span>
+
+
+                <span v-else>
+
+                <span v-if="dayobject.day.getFullYear() == new Date().getFullYear() && dayobject.day.getMonth() == new Date().getMonth() && dayobject.day.getDate() == new Date().getDate()" class="active">{{ dayobject.day.getDate() }}</span>
+                <span v-else>{{ dayobject.day.getDate() }}</span>
+            </span>
+
+            </li>
+        </ul>
+        <!--
+    <a href="##" rel="external nofollow" rel="external nofollow" class="a1">上月</a>
+    <a href="##" rel="external nofollow" rel="external nofollow" class="a2">下月</a>
+    -->
+    </div><!--mionth-->
+
+
+</div>
+<script>
+
+
+    var vue=new Vue({
+        el:'#calendar',
+        data:{//初始化1970-1-1
+            c_day: 1,
+            c_month: 1,
+            c_year: 1974,
+            c_week: 1,
+            days: [],
+        },
+        created:function () {//调用时created
+            this.initData(null);
+        },
+        methods:{
+            initData:function (cur) {
+                var date;
+                if (cur) {
+                    date = new Date(cur);
+                } else {
+                    var now=new Date();
+                    var d = new Date(this.formatDate(now.getFullYear() , now.getMonth() , 1));
+                    d.setDate(35);
+                    date = new Date(this.formatDate(d.getFullYear(),d.getMonth() + 1,1));
+                }
+                this.c_day = date.getDate();
+                this.c_year = date.getFullYear();
+                this.c_month=date.getMonth()+1;
+                this.c_week=date.getDay();
+                if (this.c_week == 0) {
+                    this.c_week = 7;
+                }
+                //设置时间
+                var time = this.formatDate(this.c_year , this.c_month, this.c_day);
+                this.days.length = 0;//如果没有这条会导致日期重叠
+                //这个是这周
+                for (var i = this.c_week - 1; i >= 0; i--) {
+                    var d = new Date(time);
+                    d.setDate(d.getDate() - i);
+                    var dayobject={};
+                    dayobject.day=d;
+                    this.days.push(dayobject);//data 中的days
+
+
+                }
+                //
+                for (var i = 1; i <= 35 - this.c_week; i++) {
+                    var d = new Date(time);
+                    d.setDate(d.getDate() + i);
+                    var dayobject={};
+                    dayobject.day=d;
+                    this.days.push(dayobject);
+                }
+            },
+            c_Fbefore: function(year, month) {
+                var d = new Date(this.formatDate(year , month , 1));
+                d.setDate(0);
+                this.initData(this.formatDate(d.getFullYear(),d.getMonth() + 1,1));
+                n--;
+               // alert(n);
+                color();
+            },
+            c_Fnext: function(year, month) {
+                var d = new Date(this.formatDate(year , month , 1));
+                d.setDate(35);
+                this.initData(this.formatDate(d.getFullYear(),d.getMonth() + 1,1));
+                n++;
+                //alert(n);
+                color();
+            },
+            c_Fyear: function(year, month) {
+                alert(year + "," + month);
+            },
+            formatDate: function(year,month,day){
+                var y = year;
+                var m = month;
+                if(m<10) m = "0" + m;
+                var d = day;
+                if(d<10) d = "0" + d;
+                return y+"-"+m+"-"+d
+            },
+        },
+
+
+
+    });
+
+
+    function color(){
+        var t_day=new Date();
+        var today=t_day.getDay();
+        $(".days li").each(function(i, elm) {
+            //console.log(index,elm);
+            var val = $(this).text();
+            //console.log(val);
+
+           // alert("val:"+val+"today:"+today+"n:"+n);
+            if (n==0) {
+                if(val<today){
+                    $(this).addClass('ccc')
+                }else if(val==today){
+                    $(this).addClass('red')
+                }else if(i%7==0 || i%7==6 ){
+                    $(this).addClass('sun')
+                }
+            }
+            else if(n<0){
+                $(this).addClass('ccc')
+            }else if(i%7==0 || i%7==6 ){
+                $(this).addClass('sun')
+            }
+        });
+    };
+    color();
+    let x1,x2,y1=0,y2=0;
+    window.onload=function () {
+        onmousedown=function (ev) {
+            var oE=ev||event;
+            x1=oE.clientX;
+            //alert(x1);
+
+
+        };
+        onmouseup=function (ev) {
+
+            var oE=ev||event;
+
+            x2=oE.clientX;
+
+            if(x1>x2){
+
+                document.getElementById("x2").click();
+                // alert("下个月");
+            }
+            else if(x1<x2){
+
+                document.getElementById("x1").click();
+                //alert("shan个月");
+            }
+
+        };
+
+
+
+    }
+    </script>
+</body>
+
+</html>

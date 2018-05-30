@@ -1,0 +1,45 @@
+*{margin: 0;padding: 0}
+@media only screen and (min-width: 240px) and (max-width: 768px){
+
+    #calendar {width: 210px;margin: 100px auto;overflow: hidden;border: 1px solid #000;padding: 20px;position: relative}
+    #calendar h4{text-align: center;margin-bottom: 10px}
+    #calendar .a1 {position: absolute;top: 20px;left: 20px;}
+    #calendar .a2 {position: absolute;top: 20px;right: 20px;}
+    #calendar .weekdays {height: 30px;line-height: 20px;border-bottom: 1px solid #000;margin-bottom: 10px}
+    #calendar .weekdays li {float: left;width: 30px;height: 30px;text-align: center;list-style: none;}
+    #calendar .days {overflow: hidden;clear: both}
+    #calendar .days li {color: yellow;float: left;width: 30px;height: 30px;text-align: center;line-height: 30px;list-style: none;}
+    #calendar .days .ccc {color: #ccc;}
+    #calendar .days .red {background: #F90;color: #fff;}
+    #calendar .days .sun {color: #f00;}
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px){
+
+    #calendar {width: 420px;margin: 100px auto;overflow: hidden;border: 1px solid #000;padding: 20px;position: relative}
+    #calendar h4{text-align: center;margin-bottom: 10px}
+    #calendar .a1 {position: absolute;top: 20px;left: 20px;}
+    #calendar .a2 {position: absolute;top: 20px;right: 20px;}
+
+    #calendar .weekdays {height: 30px;line-height: 20px;border-bottom: 1px solid #000;margin-bottom: 10px}
+    #calendar .weekdays li {float: left;width: 60px;height: 30px;text-align: center;list-style: none;}
+    #calendar .days {overflow: hidden;clear: both}
+    #calendar .days li {color: yellow;float: left;width: 60px;height: 30px;text-align: center;line-height: 30px;list-style: none;}
+    #calendar .days .ccc {color: #ccc;}
+    #calendar .days .red {background: #F90;color: #fff;}
+    #calendar .days .sun {color: #f00;}
+}
+@media only screen and (min-width: 1200px) {
+
+    #calendar {width: 520px;margin: 100px auto;overflow: hidden;border: 1px solid #000;padding: 20px;position: relative}
+    #calendar h4{text-align: center;margin-bottom: 20px}
+    #calendar .a1 {position: absolute;top: 40px;left: 40px;}
+    #calendar .a2 {position: absolute;top: 40px;right: 40px;}
+
+    #calendar .weekdays {height: 60px;line-height: 40px;border-bottom: 1px solid #000;margin-bottom: 10px}
+    #calendar .weekdays li {float: left;width: 70px;height: 60px;text-align: center;list-style: none;}
+    #calendar .days {overflow: hidden;clear: both}
+    #calendar .days li {color: yellow;float: left;width: 70px;height:60px;text-align: center;line-height: 30px;list-style: none;}
+    #calendar .days .ccc {color: #ccc;}
+    #calendar .days .red {background: #F90;color: #fff;}
+    #calendar .days .sun {color: #f00;}
+}
